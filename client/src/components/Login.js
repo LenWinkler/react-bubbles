@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const Login = () => {
 
@@ -20,7 +20,7 @@ const Login = () => {
       username: userName,
       password: pass
   }
-    axios
+    axiosWithAuth()
     .post('http://localhost:5000/api/login', credentials)
     .then(res => {
       localStorage.setItem('token', res.data.payload)
