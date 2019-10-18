@@ -14,16 +14,21 @@ const Login = () => {
     setPass(e.target.value)
   };
 
-  const submitHandler = () => {
-    const credentials = {
+  const submitHandler = e => {
+    e.preventDefault();
+    let credentials = {
       username: userName,
       password: pass
-    }
+  }
+    axios
+    .post('http://localhost:5000/api/login', credentials)
+    .then(res => {
+      localStorage.setItem('token', res.data.payload)
+    })
+    .catch(err => console.log('post error', err.response))
 
-  axios
-  .post('http://localhost:5000/api/login', credentials)
-  .then(res => console.log(res))
-  .catch(err => console.log('post error', err.response))
+    setUserName('');
+    setPass('');
   }
 
   // make a post request to retrieve a token from the api
